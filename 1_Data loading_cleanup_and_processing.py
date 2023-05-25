@@ -13,7 +13,7 @@ import pandas as pd
 #--------------------------------------------------------------------------#
 #2)loading data
 PATH = os.getcwd()
-data_path = os.path.join(PATH,'Egap/train.csv')
+data_path = os.path.join(PATH,'Egap/Egap.csv')
 
 df = pd.read_csv(data_path)
 print(f'Original Dataframe Shape: {df.shape}')
@@ -46,7 +46,7 @@ print(f'Cleaned Dataframe shape of: {df.shape}')
 
 #--------------------------------------------------------------------------#
 #4) Saving cleaned data to csv
-out_path = os.path.join(PATH,'Egap/train_clean.csv')
+out_path = os.path.join(PATH,'Egap/Egap_cleaned.csv')
 df.to_csv(out_path, index = False)
 
 #--------------------------------------------------------------------------#

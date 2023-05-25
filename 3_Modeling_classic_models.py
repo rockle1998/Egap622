@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 from collections import OrderedDict
 
-RNG_SEED = 42
+RNG_SEED = 34
 np.random.seed(RNG_SEED)
 
 #--------------------------------------------------------------------------#
@@ -383,8 +383,8 @@ print(f'Average validation MAE: {avg_mae_val:0.4f}')
 print(f'Average validation RSME: {avg_rmse_val:0.4f}')
 
 PATH = os.getcwd()
-evaluating_path = os.path.join(PATH,'data_split/random_splits_and_evaluate.csv')
-df_splits.to_csv(evaluating_path, index=False) 
+evaluating_path = os.path.join(PATH,'random_splits_and_evaluate/random_splits_and_evaluate_with_seed_34.csv')
+df_splits.to_csv(evaluating_path, index=False)
 
 print()
 print(f'------------------------END------------------------')

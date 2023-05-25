@@ -17,13 +17,13 @@ import matplotlib.pyplot as plt
 %config InlineBackend.figure_format='retina'
 from sklearn.model_selection import train_test_split
 
-RNG_SEED = 42
+RNG_SEED = 34
 np.random.seed(seed=RNG_SEED)
 
 #--------------------------------------------------------------------------#
 #2) Loading data from file's csv(excel)
 PATH =os.getcwd()                                           # Using the system
-data_path = os.path.join(PATH, 'Egap/train_clean.csv')  # Looking for the location of file's in your computer
+data_path = os.path.join(PATH, 'Egap/Egap_cleaned.csv')  # Looking for the location of file's in your computer
 df = pd.read_csv(data_path)                                 # Reading the file's 
 print(f'Full dataframe shape: {df.shape}')                  # print the data frame
 print()
@@ -56,12 +56,15 @@ unique_formulae = X['formula'].unique()
 
 #a) set a random seed to ensure reproducibitity across run
 np.random.seed(seed=RNG_SEED)
+
 #b) Store all of unique_formulae
 all_formulae = unique_formulae.copy()
+
 #c) Define the percent for the model
 val_size = 0.20 # 0.2 = 20%
 test_size = 0.10 # 0.1 = 10%
 train_size = 1 - val_size - test_size
+
 #d) Calculate the number of samples in each dataset split 
 num_val_samples = int(round(val_size * len(unique_formulae))) # The int() function converts a number or a string to its equivalent integer
 num_test_samples = int(round(test_size * len(unique_formulae))) # The round() function returns a floating point number
