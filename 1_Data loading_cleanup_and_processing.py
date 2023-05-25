@@ -19,6 +19,7 @@ df = pd.read_csv(data_path)
 print(f'Original Dataframe Shape: {df.shape}')
 print()
 # print(df.head(10))
+print(df.loc[291], '\n')
 print(f'Summary statistics of the dataframe: {df.describe()}')
 
 #--------------------------------------------------------------------------#
