@@ -10,6 +10,9 @@ import os
 import numpy as np
 import pandas as pd
 
+start_egap = 0 #(eV)
+end_egap = 6   #(eV)
+
 #--------------------------------------------------------------------------#
 #2)loading data
 PATH = os.getcwd()
@@ -18,33 +21,33 @@ data_path = os.path.join(PATH,'Egap/Egap.csv')
 df = pd.read_csv(data_path)
 print(f'Original Dataframe Shape: {df.shape}')
 print()
-# print(df.head(10))
-print(df.loc[291], '\n')
-print(f'Summary statistics of the dataframe: {df.describe()}')
-
+#print(df.head(10))
+#print()
+#print(df.loc[10], '\n')
+print(df.columns)
+rename_dict = {'target': 'Egap'}
+df = df.rename(columns=rename_dict)
+print(df.columns)
+print()
 #--------------------------------------------------------------------------#
 #3) check for and remove NaN and unrealistic values
-#   a) check for and remove NaN
-df2 = df.copy()
-bool_nan_formula = df2['formula'].isnull()
-bool_nan_target = df2['target'].isnull()
+df1 = df.copy()
+df1 = df1.dropna(axis=0, how='any')
+print(f'Dataframe shape before dropping NaNs: {df.shape}')
+print(f'Dataframe shape after dropping NaNs: {df1.shape}')
 
-df2 = df2.drop(df2.loc[bool_nan_formula].index, axis = 0)
-df2 = df2.drop(df2.loc[bool_nan_target].index, axis = 0)
+df2=df1.copy()
+bool_invalid_egap = df2['Egap'] <= start_egap
+df2 = df2.drop(df2.loc[bool_invalid_egap].index, axis = 0)
+
+df=df2.copy()
+bool_invalid_egap = df['Egap'] >= end_egap
+df = df.drop(df.loc[bool_invalid_egap].index, axis = 0)
+
 print()
-print(f'Dataframe shape before dropping Nans: {df.shape}')
-print(f'Dataframe shape after dropping Nans: {df2.shape}')
-
-#   b) check for and unrealistics
-df = df2.copy()
-bool_invalid_target_0 = df['target'] <= 0 
-#bool_invalid_target = df['target'] >= 10.0
-
-df = df.drop(df.loc[bool_invalid_target_0].index, axis = 0)
-#df = df.drop(df.loc[bool_invalid_target].index, axis = 0)
+print(f'Summary statistics of the dataframe: {df.describe()}')
 print()
-print(f'Cleaned Dataframe shape of: {df.shape}')
-
+print(f'Cleaned dataframe shape: {df.shape}')
 #--------------------------------------------------------------------------#
 #4) Saving cleaned data to csv
 out_path = os.path.join(PATH,'Egap/Egap_cleaned.csv')
@@ -55,11 +58,6 @@ df.to_csv(out_path, index = False)
 #Ending the coding  
 print()
 print("------------------------END------------------------")
-
-
-
-
-
 
 
 

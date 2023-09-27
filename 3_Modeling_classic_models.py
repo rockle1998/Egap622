@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 from collections import OrderedDict
 
-RNG_SEED = 34
+RNG_SEED = 9
 np.random.seed(RNG_SEED)
 
 #--------------------------------------------------------------------------#
@@ -232,19 +232,20 @@ df_classics = df_classics.sort_values('r2_val', ignore_index=True)
 
 def plot_pred_act(act, pred, model, reg_line=True, label=''):
     xy_max = np.max([np.max(act), np.max(pred)])
-
     plot = plt.figure(figsize=(10,6))
-    plt.plot(act, pred, 'o', ms=9, mec='k', mfc='silver', alpha=0.4)
+    plt.plot(act, pred,'o', ms=10, mec='k', mfc='silver', alpha=0.6)
     plt.plot([0, xy_max], [0, xy_max], 'k--', label='ideal')
     if reg_line:
         polyfit = np.polyfit(act, pred, deg=1)
         reg_ys = np.poly1d(polyfit)(np.unique(act))
-        plt.plot(np.unique(act), reg_ys, alpha=0.8, label='linear fit')
+        plt.plot(np.unique(act), reg_ys, alpha=0.9, label='linear fit')
     plt.axis('scaled')
-    plt.xlabel(f'Actual {label}', size = 14)
-    plt.ylabel(f'Predicted {label}', size = 14)
-    plt.title(f'{type(model).__name__}, r2: {r2_score(act, pred):0.4f}')
-    plt.legend(loc='upper left')
+    plt.xlabel(f'Actual {label}', fontsize = 18)
+    plt.xticks(fontsize=16)
+    plt.ylabel(f'Predicted {label}', fontsize = 18)
+    plt.yticks(fontsize=16)
+    plt.title(f'{type(model).__name__}, r2: {r2_score(act, pred):0.4f}', fontsize = 17)
+    plt.legend(loc='upper left', fontsize=15)
     
     return plot
 
@@ -296,7 +297,6 @@ print(f'rmse: {rmse:0.4f}')
 
 plot = plot_pred_act(y_act_test, y_pred_test, model, reg_line=True, label='Egap (eV)')
 print()
-
 
 #--------------------------------------------------------------------------#
 #6) Effect of train/validation/test dataset split 
@@ -353,25 +353,31 @@ print(f'Random splits and evaluates' )
 print(df_splits)
 
 df_splits.plot('split', ['r2_train', 'r2_val'], kind='bar')
-plt.title(f'Performance of {type(model).__name__}\nwith {len(splits)} different data splits')
+plt.title(f'Performance of {type(model).__name__}\nwith {len(splits)} different data splits', size = 16)
 plt.ylim((0, 1.0))
-plt.ylabel('$r^2$', size = 14)
-plt.xlabel('Split #', size = 14)
-plt.legend(loc='upper right', framealpha=0.9)
+plt.xlabel('Split #', fontsize = 18)
+plt.xticks(fontsize=16, rotation=0)
+plt.ylabel('$R^2$', fontsize=18)
+plt.yticks(fontsize=16)
+plt.legend(loc='upper right', framealpha=0.9, fontsize=15)
 plt.show()
 
 df_splits.plot('split', ['mae_train', 'mae_val'], kind='bar')
-plt.title(f'Performance of {type(model).__name__}\nwith {len(splits)} different data splits')
-plt.ylabel('MAE in Egap (eV)', size = 14)
-plt.xlabel('Split #', size = 14)
-plt.legend(loc='lower right', framealpha=0.9)
+plt.title(f'Performance of {type(model).__name__}\nwith {len(splits)} different data splits', size = 16)
+plt.ylabel('MAE in Egap (eV)', fontsize = 18)
+plt.yticks(fontsize=16)
+plt.xlabel('Split #', fontsize = 18)
+plt.xticks(fontsize=16, rotation=0)
+plt.legend(loc='lower right', framealpha=0.9, fontsize = 15)
 plt.show()
 
 df_splits.plot('split', ['rmse_train', 'rmse_val'], kind='bar')
-plt.title(f'Performance of {type(model).__name__}\nwith {len(splits)} different data splits')
-plt.ylabel('RMSE in Egap (eV)', size = 14)
-plt.xlabel('Split #', size = 14)
-plt.legend(loc='lower right', framealpha=0.9)
+plt.title(f'Performance of {type(model).__name__}\nwith {len(splits)} different data splits', size = 16)
+plt.ylabel('RMSE in Egap (eV)', fontsize = 18)
+plt.yticks(fontsize=16)
+plt.xlabel('Split #', fontsize = 18)
+plt.xticks(fontsize=16, rotation=0)
+plt.legend(loc='lower right', framealpha=0.9, fontsize = 15)
 plt.show()
 
 avg_r2_val = df_splits['r2_val'].mean()
@@ -383,7 +389,7 @@ print(f'Average validation MAE: {avg_mae_val:0.4f}')
 print(f'Average validation RSME: {avg_rmse_val:0.4f}')
 
 PATH = os.getcwd()
-evaluating_path = os.path.join(PATH,'random_splits_and_evaluate/random_splits_and_evaluate_with_seed_34.csv')
+evaluating_path = os.path.join(PATH,'evaluate/seed_9.csv')
 df_splits.to_csv(evaluating_path, index=False)
 
 print()

@@ -60,15 +60,10 @@ else:
 
 requirements = {'numpy': '1.18.0',
                 'pandas': '1.0.0',
-                'pandas_profiling': '3.3.0',
                 'matplotlib': '3.5.1',
                 'seaborn': '0.11.2',
                 'sklearn': '1.1.2',
-                'scipy': '1.7.3',
-                'tqdm': '4.64.1',
-                'jupyter_client': '7.3.4',
-                'ipywidgets': '8.0.2',
-                'torch': '1.12.1',}
+                'scipy': '1.7.3'}
 
 # now check the dependencies
 for lib, required_version in list(requirements.items()):

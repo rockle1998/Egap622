@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 %config InlineBackend.figure_format='retina'
 from sklearn.model_selection import train_test_split
 
-RNG_SEED = 34
+RNG_SEED = 9
 np.random.seed(seed=RNG_SEED)
 
 #--------------------------------------------------------------------------#
@@ -30,7 +30,7 @@ print()
 
 #3) Separate the Dataframe into your input variables (X)) and target variables (y))
 X = df[['formula']] # Separate by dataframe variables (X[formula])) 
-y = df['target']             # Separate by dataframe variables (target )) 
+y = df['Egap']             # Separate by dataframe variables (target )) 
 #print(f'Shape of X: {X.shape}')
 #print(f'Shape of y: {y.shape}')
 
@@ -62,8 +62,8 @@ all_formulae = unique_formulae.copy()
 
 #c) Define the percent for the model
 val_size = 0.20 # 0.2 = 20%
-test_size = 0.10 # 0.1 = 10%
-train_size = 1 - val_size - test_size
+test_size = 0.20 # 0.2 = 20%
+train_size = 1 - val_size - test_size # 0.6 = 60%
 
 #d) Calculate the number of samples in each dataset split 
 num_val_samples = int(round(val_size * len(unique_formulae))) # The int() function converts a number or a string to its equivalent integer
