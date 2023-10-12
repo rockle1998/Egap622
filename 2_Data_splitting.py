@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 %config InlineBackend.figure_format='retina'
 from sklearn.model_selection import train_test_split
 
-RNG_SEED = 9
+RNG_SEED = 3
 np.random.seed(seed=RNG_SEED)
 
 #--------------------------------------------------------------------------#

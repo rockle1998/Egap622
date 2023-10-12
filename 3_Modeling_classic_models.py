@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 from collections import OrderedDict
 
-RNG_SEED = 9
+RNG_SEED = 3
 np.random.seed(RNG_SEED)
 
 #--------------------------------------------------------------------------#
@@ -233,7 +233,7 @@ df_classics = df_classics.sort_values('r2_val', ignore_index=True)
 def plot_pred_act(act, pred, model, reg_line=True, label=''):
     xy_max = np.max([np.max(act), np.max(pred)])
     plot = plt.figure(figsize=(10,6))
-    plt.plot(act, pred,'o', ms=10, mec='k', mfc='silver', alpha=0.6)
+    plt.plot(act, pred,'h', ms=10, mec='k', mfc='silver', alpha=0.6)
     plt.plot([0, xy_max], [0, xy_max], 'k--', label='ideal')
     if reg_line:
         polyfit = np.polyfit(act, pred, deg=1)
@@ -354,30 +354,47 @@ print(df_splits)
 
 df_splits.plot('split', ['r2_train', 'r2_val'], kind='bar')
 plt.title(f'Performance of {type(model).__name__}\nwith {len(splits)} different data splits', size = 16)
+for x,y in enumerate(df_splits['r2_train']):
+    plt.text(x,y,'%.4f'%y, ha='center', va='bottom', rotation = 65, fontsize=11)
+for x,y in enumerate(df_splits['r2_val']):
+    plt.text(x,y,'%.4f'%y, ha='left', va='bottom', rotation = 70, fontsize=11) 
+plt.xlim(-0.6, len(splits)-0.2)
 plt.ylim((0, 1.0))
 plt.xlabel('Split #', fontsize = 18)
 plt.xticks(fontsize=16, rotation=0)
 plt.ylabel('$R^2$', fontsize=18)
 plt.yticks(fontsize=16)
-plt.legend(loc='upper right', framealpha=0.9, fontsize=15)
+plt.legend(loc='upper right', framealpha=0.9, fontsize=13)
 plt.show()
 
 df_splits.plot('split', ['mae_train', 'mae_val'], kind='bar')
 plt.title(f'Performance of {type(model).__name__}\nwith {len(splits)} different data splits', size = 16)
+for x,y in enumerate(df_splits['mae_train']):
+    plt.text(x-0.05,y,'%.4f'%y, ha='center', va='bottom', rotation = 70, fontsize=11) 
+for x,y in enumerate(df_splits['mae_val']):
+    plt.text(x+0.05,y,'%.4f'%y, ha='left', va='bottom', rotation = 70, fontsize=11)
+plt.xlim(-0.6, len(splits))  
+plt.ylim((0, 1.4))
 plt.ylabel('MAE in Egap (eV)', fontsize = 18)
 plt.yticks(fontsize=16)
 plt.xlabel('Split #', fontsize = 18)
 plt.xticks(fontsize=16, rotation=0)
-plt.legend(loc='lower right', framealpha=0.9, fontsize = 15)
+plt.legend(loc='upper right', framealpha=0.9, fontsize = 13)
 plt.show()
 
 df_splits.plot('split', ['rmse_train', 'rmse_val'], kind='bar')
 plt.title(f'Performance of {type(model).__name__}\nwith {len(splits)} different data splits', size = 16)
+for x,y in enumerate(df_splits['rmse_train']):
+    plt.text(x-0.05,y,'%.4f'%y, ha='center', va='bottom', rotation = 70, fontsize=11) 
+for x,y in enumerate(df_splits['rmse_val']):
+    plt.text(x+0.05,y,'%.4f'%y, ha='left', va='bottom', rotation = 70, fontsize=11)
+plt.xlim(-0.6, len(splits))  
+plt.ylim((0, 1.8))
 plt.ylabel('RMSE in Egap (eV)', fontsize = 18)
 plt.yticks(fontsize=16)
 plt.xlabel('Split #', fontsize = 18)
 plt.xticks(fontsize=16, rotation=0)
-plt.legend(loc='lower right', framealpha=0.9, fontsize = 15)
+plt.legend(loc='upper right', framealpha=0.9, fontsize = 13)
 plt.show()
 
 avg_r2_val = df_splits['r2_val'].mean()
@@ -389,7 +406,7 @@ print(f'Average validation MAE: {avg_mae_val:0.4f}')
 print(f'Average validation RSME: {avg_rmse_val:0.4f}')
 
 PATH = os.getcwd()
-evaluating_path = os.path.join(PATH,'evaluate/seed_9.csv')
+evaluating_path = os.path.join(PATH,'evaluate/seed_3.csv')
 df_splits.to_csv(evaluating_path, index=False)
 
 print()
